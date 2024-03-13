@@ -1,0 +1,37 @@
+version: '3'
+
+silent: false
+
+vars:
+  # Command to output a message to console, in blue
+  LOG: printf '\033[0;36m%s\033[0m\n'
+  # Poetry version
+  POETRY_VERSION: '1.8.2'
+  # Django project that you are interested in
+  PROJECT_TO_RUN: 'monthly_challenges'
+
+
+tasks:
+  clean:
+    desc: Clean up the local environment
+    cmds:
+      - '{{.LOG}} "Deleting Python dependencies and environment"'
+      - poetry env remove --all
+
+  init:
+    desc: Setup Python, Poetry and install Python dependencies
+    cmds:
+      - '{{.LOG}} "Installing project Python version..."'
+      - pyenv install --skip-existing
+      - '{{.LOG}} "Installing Poetry..."'
+      - curl -sSL https://install.python-poetry.org | python - --version {{.POETRY_VERSION}}
+      - '{{.LOG}} "Install Python dependencies..."'
+      - $HOME/.local/bin/poetry env use $(pyenv which python)
+      - $HOME/.local/bin/poetry install
+      - '{{.LOG}} "IMPORTANT: Add $HOME/.local/bin to \$PATH"'
+
+  run:
+    desc: Run the development server
+    dir: '{{.PROJECT_TO_RUN}}'
+    cmds:
+      - poetry run python manage.py runserver
