@@ -17,8 +17,13 @@ challenges = {
     "september": "Learn Django for at least 20 minutes every day!",
     "october": "Eat no meat for the entire month!",
     "november": "Walk for at least 20 minutes every day!",
-    "december": "Learn Django for at least 20 minutes every day!",
+    "december": None,
 }
+
+
+def index(request):
+    months = list(challenges.keys())
+    return render(request, "challenges/index.html", {"months": months})
 
 
 def monthly_challenge_by_number(request, month):
@@ -37,7 +42,7 @@ def monthly_challenge(request, month):
         return render(
             request,
             "challenges/challenge.html",
-            {"text": challenge_text, "month": month.capitalize()},
+            {"text": challenge_text, "month": month},
         )
     else:
         return HttpResponseNotFound("This month is not supported!")
