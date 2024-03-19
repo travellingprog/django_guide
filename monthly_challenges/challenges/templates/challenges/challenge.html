@@ -14,7 +14,7 @@
 
     <h1>{{ month|title }} Challenge</h1>
     {% if text is None %}
-        <p>There is no challenge for this month yet!</p>
+        <p class="fallback">There is no challenge for this month yet!</p>
     {% else %}
         <h2>{{ text }}</h2>
     {% endif %}

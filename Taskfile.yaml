@@ -8,7 +8,7 @@ vars:
   # Poetry version
   POETRY_VERSION: '1.8.2'
   # Django project that you are interested in
-  PROJECT_TO_RUN: 'monthly_challenges'
+  PROJECT_TO_RUN: 'my_site'
 
 
 tasks:
